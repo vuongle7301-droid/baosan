@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bào Sàn – Tổng hợp sàn cho người mới</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f17; --panel:#121826; --panel2:#182033; --line:#243049;
+    --text:#e8edf7; --muted:#93a0b8; --accent:#f5b83d; --accent2:#3dd6a3;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{overflow-x:hidden;font-family:"Be Vietnam Pro",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:10;background:rgba(11,15,23,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;font-size:22px;letter-spacing:-.5px}
+  .logo span{color:var(--accent)}
+  .nav nav{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+  .nav nav a:hover{color:var(--text)}
+  @media(max-width:640px){.nav nav{display:none}}
+
+  /* Hero */
+  .hero{padding:40px 0 56px;text-align:center;position:relative}
+  .hero::before{content:"";position:absolute;inset:-40% -20% auto;height:600px;background:radial-gradient(closest-side,rgba(245,184,61,.18),transparent);pointer-events:none}
+  .badge{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--muted);margin-bottom:20px;background:var(--panel)}
+  .hero h1{font-size:clamp(32px,5.5vw,56px);line-height:1.15;font-weight:800;letter-spacing:-1px;max-width:820px;margin:0 auto 18px}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{color:var(--muted);font-size:18px;max-width:620px;margin:0 auto 32px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:12px;font-weight:600;font-size:15px;transition:.2s;border:none;cursor:pointer;font-family:inherit}
+  .btn-primary{background:var(--accent);color:#1a1200}
+  .btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+  .btn-ghost:hover{background:var(--panel)}
+  .hero .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .stats{display:flex;gap:40px;justify-content:center;margin-top:48px;flex-wrap:wrap}
+  .stats div{text-align:center}
+  .stats b{display:block;font-size:28px;font-weight:800}
+  .stats span{font-size:13px;color:var(--muted)}
+
+  /* Section */
+  section{padding:64px 0}
+  .sec-head{text-align:center;margin-bottom:36px}
+  .sec-head h2{font-size:clamp(26px,3.5vw,36px);font-weight:800;letter-spacing:-.5px}
+  .sec-head p{color:var(--muted);margin-top:8px}
+
+  /* Filters */
+  .filters{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:28px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-weight:600;font-size:14px;cursor:pointer;font-family:inherit;transition:.2s}
+  .tab.active{background:var(--accent);color:#1a1200;border-color:var(--accent)}
+  .search{flex:1;min-width:200px;max-width:300px;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-family:inherit;font-size:14px;outline:none}
+  .search:focus{border-color:var(--accent)}
+
+  /* Cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;transition:.25s}
+  .card:hover{border-color:#3a4a6b;transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.35)}
+  .card-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .mono{width:52px;height:52px;border-radius:12px;object-fit:cover;display:grid;place-items:center;font-weight:800;font-size:20px;color:#0b0f17;flex-shrink:0}
+  .card h3{font-size:19px;font-weight:700}
+  .cat{font-size:12px;color:var(--muted)}
+  .hot{margin-left:auto;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(61,214,163,.15);color:var(--accent2)}
+  .card p{color:var(--muted);font-size:14px;margin-bottom:16px;flex:1}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+  .tags span{font-size:12px;padding:4px 10px;border-radius:8px;background:var(--panel2);color:#c3cde0}
+  .card .row{display:flex;gap:10px}
+  .card .row .btn{flex:1;justify-content:center;padding:11px 14px;font-size:14px}
+  .empty{text-align:center;color:var(--muted);padding:40px;display:none}
+
+  /* Events */
+  .ev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,360px));justify-content:center;gap:20px}
+  .ev{position:relative;background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;overflow:hidden;transition:.25s}
+  .ev:hover{border-color:#3a4a6b;transform:translateY(-3px)}
+  .ev::after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(closest-side,rgba(245,184,61,.18),transparent)}
+  .ev-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .ev-head img,.ev-head .mono{width:32px;height:32px;border-radius:8px;font-size:14px}
+  .ev-head b{font-size:14px}
+  .st{margin-left:auto;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
+  .st.live{background:rgba(61,214,163,.15);color:var(--accent2)}
+  .st.soon{background:rgba(245,184,61,.15);color:var(--accent)}
+  .st.end{background:rgba(147,160,184,.15);color:var(--muted)}
+  .ev h3{font-size:19px;line-height:1.35;margin-bottom:8px}
+  .ev p{color:var(--muted);font-size:14px;flex:1;margin-bottom:14px}
+  .ev .reward{font-size:14px;margin-bottom:6px}
+  .ev .reward b{color:var(--accent)}
+  .ev .time{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .ev .btn{justify-content:center}
+  .ev.ended{opacity:.55}
+  .ev-empty{text-align:center;color:var(--muted);padding:40px;border:1px dashed var(--line);border-radius:var(--radius)}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .step .n{width:36px;height:36px;border-radius:10px;background:rgba(245,184,61,.15);color:var(--accent);display:grid;place-items:center;font-weight:800;margin-bottom:14px}
+  .step h4{font-size:17px;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:14px}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;padding:18px 22px}
+  summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+  summary::after{content:"+";color:var(--accent);font-size:20px;line-height:1}
+  details[open] summary::after{content:"–"}
+  details p{color:var(--muted);margin-top:10px;font-size:15px}
+
+  /* Warning */
+  .warn{background:linear-gradient(135deg,rgba(245,184,61,.1),rgba(245,184,61,.03));border:1px solid rgba(245,184,61,.35);border-radius:var(--radius);padding:24px 28px;display:flex;gap:16px;align-items:flex-start}
+  .warn .ic{font-size:26px}
+  .warn h4{margin-bottom:4px}
+  .warn p{color:var(--muted);font-size:14px}
+
+  /* Contact */
+  .contact{text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:48px 24px}
+  .contact h2{font-size:28px;font-weight:800;margin-bottom:8px}
+  .contact p{color:var(--muted);margin-bottom:24px}
+  .contact .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+  footer{border-top:1px solid var(--line);padding:28px 0;text-align:center;color:var(--muted);font-size:13px;margin-top:40px}
+
+  /* Modal */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .modal.open{display:flex}
+  .modal-box{background:var(--panel);border:1px solid var(--line);border-radius:20px;max-width:520px;width:100%;padding:28px;max-height:85vh;overflow:auto}
+  .modal-box h3{font-size:22px;margin-bottom:4px}
+  .modal-box .sub{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .modal-box ol{padding-left:20px;color:#c3cde0;font-size:15px}
+  .modal-box li{margin-bottom:10px}
+  .m-note{font-size:12px;color:var(--muted);margin-top:12px}
+  .m-note:empty{display:none}
+  .ev-actions{display:flex;gap:10px}
+  .ev-actions .btn{flex:1;justify-content:center;padding:12px 10px;white-space:nowrap}
+  .modal-box .row{display:flex;gap:10px;margin-top:22px}
+  .modal-box .row .btn{flex:1;justify-content:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo">Bào <span>Sàn</span></a>
+    <nav>
+      <a href="#su-kien">Sự kiện</a>
+      <a href="#san">Danh sách sàn</a>
+      <a href="#huong-dan">Hướng dẫn</a>
+      <a href="#faq">Hỏi đáp</a>
+      <a href="#lien-he">Liên hệ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section id="su-kien" style="padding-top:44px">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>🎁 Các sự kiện bào sàn</h2>
+        <p>Tổng hợp khuyến mãi, quà tặng cho người đăng ký mới. Tham gia qua link bên dưới để nhận ưu đãi.</p>
+      </div>
+      <div class="ev-grid" id="ev-grid"></div>
+    </div>
+  </section>
+
+  <div class="wrap hero">
+    <div class="badge">🚀 Dành cho người mới bắt đầu</div>
+    <h1>Tất cả các sàn uy tín, <em>đăng ký trong 1 nơi</em></h1>
+    <p>Chọn sàn bạn muốn, bấm đăng ký và làm theo hướng dẫn từng bước. Đơn giản, nhanh chóng, không cần biết trước gì cả.</p>
+    <div class="actions">
+      <a href="#san" class="btn btn-primary">Xem danh sách sàn →</a>
+      <a href="#huong-dan" class="btn btn-ghost">Cách đăng ký</a>
+    </div>
+    <div class="stats">
+      <div><b id="count-all">0</b><span>Sàn được tổng hợp</span></div>
+      <div><b>3</b><span>Danh mục</span></div>
+      <div><b>5 phút</b><span>Để tạo tài khoản</span></div>
+    </div>
+  </div>
+
+  <section id="san">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Chọn sàn bạn muốn đăng ký</h2>
+        <p>Bấm "Đăng ký ngay" để mở trang đăng ký chính thức của sàn</p>
+      </div>
+      <div class="filters">
+        <div class="tabs" id="tabs"></div>
+        <input class="search" id="search" type="text" placeholder="🔍 Tìm sàn...">
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty">Không tìm thấy sàn phù hợp.</div>
+    </div>
+  </section>
+
+  <section id="huong-dan">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Đăng ký chỉ với 4 bước</h2>
+        <p>Áp dụng cho hầu hết các sàn trong danh sách</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h4>Chọn sàn</h4><p>Xem danh sách bên trên, chọn sàn phù hợp với nhu cầu của bạn rồi bấm "Đăng ký ngay".</p></div>
+        <div class="step"><div class="n">2</div><h4>Tạo tài khoản</h4><p>Nhập email hoặc số điện thoại, đặt mật khẩu mạnh và xác nhận mã gửi về.</p></div>
+        <div class="step"><div class="n">3</div><h4>Xác minh danh tính</h4><p>Chuẩn bị CCCD và chụp ảnh khuôn mặt theo hướng dẫn của sàn (KYC).</p></div>
+        <div class="step"><div class="n">4</div><h4>Bảo mật tài khoản</h4><p>Bật xác thực 2 lớp (2FA) và không chia sẻ mật khẩu cho bất kỳ ai.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head"><h2>Câu hỏi thường gặp</h2></div>
+      <div class="faq">
+        <details><summary>Đăng ký qua trang này có mất phí không?</summary><p>Hoàn toàn miễn phí. Bạn được đưa thẳng đến trang đăng ký chính thức của từng sàn.</p></details>
+        <details><summary>Người mới nên chọn sàn nào?</summary><p>Nên chọn sàn có giao diện tiếng Việt, hỗ trợ tốt và dễ nạp/rút. Nếu chưa chắc, hãy nhắn cho chúng tôi để được tư vấn.</p></details>
+        <details><summary>Cần chuẩn bị gì để đăng ký?</summary><p>Một email hoặc số điện thoại, CCCD còn hạn và điện thoại có camera để xác minh khuôn mặt.</p></details>
+        <details><summary>Tôi gặp lỗi khi đăng ký thì sao?</summary><p>Liên hệ với chúng tôi qua Zalo hoặc Facebook ở cuối trang, chúng tôi sẽ hướng dẫn từng bước.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="warn">
+        <div class="ic">⚠️</div>
+        <div>
+          <h4>Cảnh báo rủi ro</h4>
+          <p>Đầu tư tiền mã hóa, chứng khoán và ngoại hối đều có rủi ro cao, bạn có thể mất một phần hoặc toàn bộ số vốn. Thông tin trên trang chỉ mang tính tham khảo, không phải lời khuyên đầu tư. Hãy tìm hiểu kỹ và tuân thủ quy định pháp luật nơi bạn sinh sống trước khi tham gia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lien-he">
+    <div class="wrap">
+      <div class="contact">
+        <h2>Cần hỗ trợ đăng ký?</h2>
+        <p>Nhắn cho chúng tôi, sẽ có người hướng dẫn bạn miễn phí.</p>
+        <div class="actions" id="contact-actions"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Bào Sàn · Tổng hợp sàn cho người mới · Trang có thể chứa link giới thiệu (affiliate).</div>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="m-title"></h3>
+    <div class="sub" id="m-sub"></div>
+    <ol id="m-steps"></ol>
+    <p id="m-note" class="m-note"></p>
+    <div class="row">
+      <button class="btn btn-ghost" id="m-close">Đóng</button>
+      <a class="btn btn-primary" id="m-go" href="#" target="_blank" rel="noopener">Đăng ký ngay →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   CẤU HÌNH – SỬA Ở ĐÂY
+   - link: thay bằng LINK GIỚI THIỆU (ref) của bạn
+   - hot: true để gắn nhãn "Phổ biến"
+   ========================================================= */
+const CONTACT = {
+  zalo: "https://zalo.me/0000000000",          // ← số Zalo của bạn
+  facebook: "https://facebook.com/yourpage",   // ← trang Facebook của bạn
+  telegram: "https://t.me/yourname"            // ← Telegram (xoá nếu không dùng)
+};
+
+const CATEGORIES = { all:"Tất cả", crypto:"Tiền mã hóa", stock:"Chứng khoán VN", forex:"Forex" };
+
+const EXCHANGES = [
+  // ---- Crypto ----
+  { name:"Binance", logo:"data:image/webp;base64,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", cat:"crypto", color:"#f3ba2f", hot:true,
+    link:"https://www.binance.com/referral/mystery-box/vmbr-13/claim?ref=W55N5LHJ&utm_medium=web_share_copy",
+    desc:"Một trong những sàn giao dịch tiền mã hóa lớn nhất thế giới, nhiều cặp coin, thanh khoản cao.",
+    tags:["Giao diện tiếng Việt","P2P","Nhiều coin"] },
+  { name:"OKX", logo:"data:image/webp;base64,UklGRvYCAABXRUJQVlA4IOoCAACQGQCdASpoAGgAPlEei0QjoaEbGL1UOAUEtIALaf81/xP8O+pAr3f5M/Kfst1uvx4/I7jmOAfr1+UepAcg9ML/kHoYaC/oj/Tf1X4Cv47/Ov9R/Yv3b+DP1u+jT+wAHpf2gKz2wP2mM3wGAVFKGX/OxmdbmV9piEJ/WY1KRqWh700bQBGBJcmQmf2LtYaVq98Jagd/s+JRvgiUVryzpws2O0y7ihA9pfF7hEAf5PC8H+3bnnPNRv44ki5x9pqH0Sy/DfJQ4sOPzUlGb5GxzGuX3c2soAAA/rtRzwFpn8y6+0hSA3YhS0pjItXJ8YwBnGioetV63Fv/X4mRDe1ABABVpl/Dsyx/CLKnYxB4XlBxeXkwZZfvE108EdusyqMETN8FNPaHgJAY1PjWTNbf2pTiUvw26XHXnpXcDaW+dtrhRAbeXSna4dpwSt6XOAx8jX9Mtxvyw8cyiuPeRXynGvmzD7kHkmYXgqUPPbmc8oOyRqH2Agpcnr1amM/oKTw6/92B4XVjQRaPtF5M4+vyKrTr84m1rjx0E840TiIL2jExoFuP4ZFAhm3xbVuZmPhw3o/46LHJJbZtBsGuQ3UTbbBGr/L/UwMZlPm6bb7+XUyl7iGVrMX3Mr8T/lA5jIP7P8nvTe6wxzpKFaWSZlHIGKwiGOLJFKFNL4xPXgO6ieFcGfE5OcKK2h9LWPylj7DA4fUoFZp2vareNBuNZMyLx6UMW5myKLDcy4Ojee6gxbMacYYsfXBiczdrbWZnvEoLCgJ1JBTrnC0Z4zekPKe5nhAKwUGRlTJIbWOsP+VHr8k1cTA/Xdo0edkyqS/c62PAd6fbAj30TGWMLv+OYC3PMwPsjZ7tsvMj8vCNjKQW+3wP1syM2kMXG9qcLoJCfoq5Xuz1W/W0XgDdnhFM5eg2QlXsdEIwYmMMBRSGAKLVUA3UkKBpjwlq/+Ab/ThD/mjrTWOJTJE6TQ2I+/sAVj655lxbZBdLvNpG0AAAAA==", cat:"crypto", color:"#ffffff",
+    link:"https://www.okx.com/",
+    desc:"Sàn quốc tế với ví Web3 tích hợp, giao dịch spot và phái sinh.",
+    tags:["Ví Web3","P2P","Phái sinh"] },
+  { name:"Bitget", logo:"data:image/webp;base64,UklGRkADAABXRUJQVlA4IDQDAACQFQCdASpoAGgAPlEokEYjoqGhJJbZIHAKCUASsH8l0/nt3md0j+r/h/c0DJdW35z7ku0n9mfuAfod/reoB5gP2j6jfoAf0D/odYT6AHlm+xV+2X7R+0zFV3aPYDKk4E6QKaH4tdQDo7DNYWVU5zKo7bwr6VmVg2UQ8HWvCFi9aN7jPO6rGySiJZNgEsRKTzuFfRosIxpkHlS2eDSmfUgyP3yuT7KRU5nasob9v33YFSDyWgIAAP79dnAGg+OFQibvNnKyYRPKs0p8DDgOohT/cUQhNetce1htlxBhc/NNcRpZ4e8E5Zhi/u1F+kclrqUwZ9FJI7Eod1D/4w0G6zWORRw4kHy/YnI7yOCZywb701Rh+yKdEo8MNAc2BpaWI5PnfgeuTZdz9b93cRFlwULOzq538fPQeHGnDzqg+60titp+/jhaVN2dlgF+Rr4jb/tHufEU2/HKGGyGslEYpjrBGRQR/jFHMV+mqzSncPzwJQw2+waGPsewIPjjSLJ3yIODADi6htxwzfREY/E5uZm+8l5t9b+S+rw6mXXGfUYTMDHzOtUaPV6PYFr/XSrrXI/AUNe+ONXsc6zVLgbYJJO2dH8KsjzoxSsXAjhN7Q7E7YIbaPp7nCivmSjIpNGxm3Zb6sMAANElX96xr0XTNCv7kl7j0SuURdJLnDH1fGE1tqQvbiUGp1c9jOhi+NZPvZge2uiljmpcGT2Bj8NCg4swgXV+8BKXoSRUneqgb5zMgW/ZPQFe7FKUb8EZTW4SiybNkA3U8WJMY9pqlbBTMXtWgmwrSRShFes/+OMw/zlxS0Yczn9zPrX3qb7CF0qTRB38s4StW1B8RDoQAjW5pW3idgkwo28HSP5UjoKbAuheceI8pl1UIOcVzgqQqAzbA38+7DWAVKhTAyybBok5GnVPDwC4iGRbGTdB2fbanTnqPOxdYhx0pfO40jekGb2v63vyG7mL2z2O/Uknh6JCB0jeiS3tk2CZwapGl2wT6GRfD6SQM/XAn+fRmdwCNpvEX04E1srJU3sKjThzFSvX0HFYyljdniF4thqTYr3OvyvShJyfQbtFCv0FyfvbBrOaAAAAAAAA", cat:"crypto", color:"#1da2b4",
+    link:"https://www.bitget.com/",
+    desc:"Mạnh về tính năng copy trade – sao chép lệnh của trader khác.",
+    tags:["Copy trade","P2P"] },
+
+
+  // ---- Chứng khoán VN: thêm sàn vào đây (cat:"stock") ----
+
+  // ---- Forex: thêm sàn vào đây (cat:"forex") ----
+];
+
+/* ===== SỰ KIỆN BÀO SÀN =====
+   exchange: tên sàn (trùng với tên trong EXCHANGES để lấy logo)
+   status: "live" (Đang diễn ra) | "soon" (Sắp diễn ra) | "end" (Đã kết thúc)
+   reward: phần thưởng (để "" nếu không muốn ghi)
+   time: thời gian diễn ra (để "" nếu không rõ)
+   link: link tham gia (nên dùng link ref của bạn)                         */
+const EVENTS = [
+  { exchange:"Binance", status:"live",
+    title:"Mở hộp 8-12-18-28 cho người mới",
+    desc:"Đăng ký Binance mới, nạp 100 USDT và giao dịch 300 USDT là nhận ngay 1 hộp quà bí ẩn. Hộp nào cũng có quà: voucher 8, 12, 18 hoặc 28 USDT. Sự kiện có thời hạn, làm sớm kẻo lỡ!",
+    reward:"Voucher ngẫu nhiên 8 / 12 / 18 / 28 USDT",
+    time:"Thời gian có hạn – xem đồng hồ đếm ngược trên trang sự kiện",
+    guide:[
+      "Bấm \"Tham gia ngay\" và đăng ký tài khoản Binance MỚI bằng một <b>Gmail mới</b>. Sau khi đăng ký, màn hình hiện <b>\"Đăng ký thành công\" dưới mã W55N5LHJ</b> là đã thành công.",
+      "Tải app Binance, đăng nhập vào app và <b>xác minh danh tính (KYC)</b>: chụp CCCD 2 mặt và quét khuôn mặt.",
+      "Sau khi KYC được duyệt, <b>nạp tối thiểu 100 USDT</b> qua P2P hoặc tiền pháp định (chuyển khoản / thẻ).",
+      "Vào mục <b>Giao ngay (Spot)</b>, giao dịch tổng cộng <b>tối thiểu 300 USDT</b>. ⚠️ Chỉ tính <b>lệnh MUA</b> các cặp <b>BNB/USDT</b> và <b>BTC/USDT</b>.",
+      "Bấm vào <b>banner sự kiện trong app Binance</b> để mở hộp và nhận ngay tiền tươi 💰 (8, 12, 18 hoặc 28 USDT)."
+    ],
+    note:"Tóm tắt từ trang sự kiện của Binance. Điều kiện có thể thay đổi; xem mục \"Quy tắc\" trên trang sự kiện để biết chi tiết chính xác.",
+    link:"https://www.binance.com/referral/mystery-box/vmbr-13/claim?ref=W55N5LHJ&utm_medium=web_share_copy" },
+];
+
+const STEPS = {
+  crypto:["Bấm \"Đăng ký ngay\" để mở trang của sàn.","Đăng ký bằng email hoặc số điện thoại, đặt mật khẩu mạnh.","Nhập mã xác nhận được gửi về.","Xác minh danh tính (KYC) bằng CCCD và ảnh khuôn mặt.","Bật bảo mật 2 lớp (Google Authenticator)."],
+  stock:["Bấm \"Đăng ký ngay\" để mở trang công ty chứng khoán.","Chọn \"Mở tài khoản online\" (hoặc tải app).","Nhập số điện thoại, chụp CCCD 2 mặt và xác thực khuôn mặt.","Ký hợp đồng điện tử và nhận số tài khoản.","Liên kết tài khoản ngân hàng để nạp tiền."],
+  forex:["Bấm \"Đăng ký ngay\" để mở trang của sàn.","Đăng ký bằng email, chọn quốc gia và đặt mật khẩu.","Xác minh email và số điện thoại.","Tải giấy tờ tùy thân và giấy tờ xác minh địa chỉ.","Tạo tài khoản giao dịch (bắt đầu với tài khoản Demo để luyện tập)."]
+};
+
+/* ================= KHÔNG CẦN SỬA PHẦN DƯỚI ================= */
+let current = "all";
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+
+function renderTabs(){
+  const t = document.getElementById("tabs");
+  t.innerHTML = "";
+  Object.entries(CATEGORIES).forEach(([k,v])=>{
+    const b = document.createElement("button");
+    b.className = "tab" + (k===current?" active":"");
+    const n = k==="all" ? EXCHANGES.length : EXCHANGES.filter(e=>e.cat===k).length;
+    b.textContent = `${v} (${n})`;
+    b.onclick = ()=>{ current=k; renderTabs(); renderGrid(); };
+    t.appendChild(b);
+  });
+}
+
+function renderGrid(){
+  const q = search.value.trim().toLowerCase();
+  const list = EXCHANGES.filter(e => (current==="all"||e.cat===current) && e.name.toLowerCase().includes(q));
+  grid.innerHTML = "";
+  const emptyEl = document.getElementById("empty");
+  emptyEl.style.display = list.length ? "none" : "block";
+  const catTotal = current==="all" ? EXCHANGES.length : EXCHANGES.filter(e=>e.cat===current).length;
+  emptyEl.innerHTML = (catTotal===0)
+    ? `⏳ Các sàn mục <b>${CATEGORIES[current]}</b> sẽ sớm được cập nhật.<br>Cần hỗ trợ ngay? <a href="#lien-he" style="color:var(--accent)">Liên hệ với chúng tôi</a>.`
+    : "Không tìm thấy sàn phù hợp.";
+  list.forEach(e=>{
+    const i = EXCHANGES.indexOf(e);
+    const c = document.createElement("div");
+    c.className = "card";
+    c.innerHTML = `
+      <div class="card-top">
+        ${e.logo ? `<img class="mono" src="${e.logo}" alt="${e.name}">` : `<div class="mono" style="background:${e.color}">${e.name[0]}</div>`}
+        <div><h3>${e.name}</h3><div class="cat">${CATEGORIES[e.cat]}</div></div>
+        ${e.hot?'<span class="hot">🔥 Phổ biến</span>':''}
+      </div>
+      <p>${e.desc}</p>
+      <div class="tags">${e.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+      <div class="row">
+        <button class="btn btn-ghost" data-guide="${i}">Hướng dẫn</button>
+        <a class="btn btn-primary" href="${e.link}" target="_blank" rel="noopener">Đăng ký ngay</a>
+      </div>`;
+    grid.appendChild(c);
+  });
+}
+
+grid.addEventListener("click", ev=>{
+  const b = ev.target.closest("[data-guide]");
+  if(!b) return;
+  const e = EXCHANGES[+b.dataset.guide];
+  document.getElementById("m-title").textContent = "Cách đăng ký " + e.name;
+  document.getElementById("m-sub").textContent = CATEGORIES[e.cat] + " · khoảng 5–10 phút";
+  document.getElementById("m-steps").innerHTML = STEPS[e.cat].map(s=>`<li>${s}</li>`).join("");
+  document.getElementById("m-go").href = e.link;
+  document.getElementById("m-note").textContent = "";
+  document.getElementById("m-go").textContent = "Đăng ký ngay →";
+  document.getElementById("modal").classList.add("open");
+});
+const modal = document.getElementById("modal");
+document.getElementById("m-close").onclick = ()=>modal.classList.remove("open");
+modal.onclick = ev=>{ if(ev.target===modal) modal.classList.remove("open"); };
+
+search.addEventListener("input", renderGrid);
+
+const ca = document.getElementById("contact-actions");
+const labels = {zalo:"💬 Zalo", facebook:"📘 Facebook", telegram:"✈️ Telegram"};
+Object.entries(CONTACT).forEach(([k,url],idx)=>{
+  if(!url) return;
+  const a = document.createElement("a");
+  a.className = "btn " + (idx===0?"btn-primary":"btn-ghost");
+  a.href = url; a.target="_blank"; a.rel="noopener";
+  a.textContent = labels[k] || k;
+  ca.appendChild(a);
+});
+
+function renderEvents(){
+  const g = document.getElementById("ev-grid");
+  const label = {live:"🟢 Đang diễn ra", soon:"⏳ Sắp diễn ra", end:"Đã kết thúc"};
+  const order = {live:0, soon:1, end:2};
+  const list = [...EVENTS].sort((a,b)=>order[a.status]-order[b.status]);
+  if(!list.length){ g.outerHTML = '<div class="ev-empty">Sự kiện mới sẽ sớm được cập nhật. Quay lại sau nhé!</div>'; return; }
+  g.innerHTML = list.map(ev=>{
+    const ex = EXCHANGES.find(e=>e.name===ev.exchange) || {name:ev.exchange,color:"#f5b83d"};
+    const logo = ex.logo ? `<img src="${ex.logo}" alt="${ex.name}">` : `<div class="mono" style="background:${ex.color}">${ex.name[0]}</div>`;
+    const ended = ev.status==="end";
+    return `<div class="ev${ended?" ended":""}">
+      <div class="ev-head">${logo}<b>${ex.name}</b><span class="st ${ev.status}">${label[ev.status]}</span></div>
+      <h3>${ev.title}</h3>
+      <p>${ev.desc}</p>
+      ${ev.reward?`<div class="reward">🎁 Phần thưởng: <b>${ev.reward}</b></div>`:""}
+      ${ev.time?`<div class="time">🗓 ${ev.time}</div>`:'<div class="time"></div>'}
+      ${ended?'<span class="btn btn-ghost" style="cursor:default">Sự kiện đã kết thúc</span>'
+             :`<div class="ev-actions"><a class="btn btn-primary" href="${ev.link}" target="_blank" rel="noopener">Tham gia ngay →</a>${ev.guide&&ev.guide.length?`<button class="btn btn-ghost" data-evguide="${EVENTS.indexOf(ev)}">📖 Hướng dẫn</button>`:""}</div>`}
+    </div>`;
+  }).join("");
+}
+renderEvents();
+document.getElementById("su-kien").addEventListener("click", ev=>{
+  const b = ev.target.closest("[data-evguide]");
+  if(!b) return;
+  const e = EVENTS[+b.dataset.evguide];
+  document.getElementById("m-title").textContent = e.title;
+  document.getElementById("m-sub").textContent = e.exchange + " · " + (e.reward||"");
+  document.getElementById("m-steps").innerHTML = e.guide.map(s=>`<li>${s}</li>`).join("");
+  document.getElementById("m-note").textContent = e.note||"";
+  document.getElementById("m-go").textContent = "Tham gia ngay →";
+  document.getElementById("m-go").href = e.link;
+  document.getElementById("modal").classList.add("open");
+});
+
+document.getElementById("count-all").textContent = EXCHANGES.length;
+document.getElementById("year").textContent = new Date().getFullYear();
+renderTabs(); renderGrid();
+</script>
+</body>
+</html>
