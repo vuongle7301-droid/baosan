@@ -139,6 +139,21 @@
   .ev-actions .btn{flex:1;justify-content:center;padding:12px 10px;white-space:nowrap}
   .modal-box .row{display:flex;gap:10px;margin-top:22px}
   .modal-box .row .btn{flex:1;justify-content:center}
+  /* Guides (Hướng dẫn cho người mới) */
+  .gd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,280px));justify-content:center;gap:20px}
+  .gd{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;transition:.25s;font-family:inherit;color:inherit}
+  .gd:hover{border-color:#3a4a6b;transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.35)}
+  .gd img{width:150px;height:150px;object-fit:contain;margin-bottom:12px}
+  .gd h3{font-size:18px;line-height:1.35;margin-bottom:6px}
+  .gd p{color:var(--muted);font-size:14px;margin-bottom:14px;flex:1}
+  .gd .btn{width:100%;justify-content:center;padding:11px 14px;font-size:14px}
+  .g-steps{list-style:none;padding:0}
+  .g-steps li{margin-bottom:22px}
+  .g-steps .cap{display:flex;gap:10px;align-items:flex-start;color:#c3cde0;font-size:15px;margin-bottom:10px;text-align:left}
+  .g-steps .cap b.n{flex-shrink:0;width:28px;height:28px;border-radius:8px;background:rgba(245,184,61,.15);color:var(--accent);display:grid;place-items:center;font-size:14px}
+  .g-steps img{display:block;width:100%;max-width:300px;margin:0 auto;border-radius:14px;border:1px solid var(--line)}
+  .g-warn{background:rgba(245,184,61,.08);border:1px solid rgba(245,184,61,.35);border-radius:12px;padding:12px 14px;font-size:13px;color:#e7d3a6;margin-bottom:18px}
+  .g-warn:empty{display:none}
 </style>
 </head>
 <body>
@@ -148,6 +163,7 @@
     <a href="#top" class="logo">Bào <span>Sàn</span></a>
     <nav>
       <a href="#su-kien">Sự kiện</a>
+      <a href="#nguoi-moi">Người mới</a>
       <a href="#san">Danh sách sàn</a>
       <a href="#huong-dan">Hướng dẫn</a>
       <a href="#faq">Hỏi đáp</a>
@@ -164,6 +180,16 @@
         <p>Tổng hợp khuyến mãi, quà tặng cho người đăng ký mới. Tham gia qua link bên dưới để nhận ưu đãi.</p>
       </div>
       <div class="ev-grid" id="ev-grid"></div>
+    </div>
+  </section>
+
+  <section id="nguoi-moi" style="padding-top:8px">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>📘 Hướng dẫn cho người mới</h2>
+        <p>Các thao tác hay dùng trên app sàn, có ảnh minh họa từng bước.</p>
+      </div>
+      <div class="gd-grid" id="gd-grid"></div>
     </div>
   </section>
 
@@ -264,6 +290,19 @@
   </div>
 </div>
 
+<div class="modal" id="gmodal">
+  <div class="modal-box">
+    <h3 id="g-title"></h3>
+    <div class="sub" id="g-sub"></div>
+    <div class="g-warn" id="g-warn"></div>
+    <ol class="g-steps" id="g-steps"></ol>
+    <div class="row">
+      <button class="btn btn-ghost" id="g-close">Đóng</button>
+    </div>
+  </div>
+</div>
+
+<script src="images.js"></script>
 <script>
 /* =========================================================
    CẤU HÌNH – SỬA Ở ĐÂY
@@ -348,6 +387,31 @@ const EVENTS = [
     ],
     note:"Tóm tắt từ trang giới thiệu của OKX. Phần thưởng khác nhau tùy từng người, có thể kèm giai đoạn khóa và yêu cầu nắm giữ tài sản; xem \"Điều khoản và điều kiện\" trong app OKX để biết chi tiết chính xác.",
     link:"https://www.okx.com/vi/join/af4rxogt" },
+];
+
+/* HƯỚNG DẪN CHO NGƯỜI MỚI – mỗi hướng dẫn có: title, exchange, desc, cover (tên ảnh trong images.js), warn (lưu ý, có thể bỏ trống), steps (mỗi bước: text + img) */
+const GUIDES = [
+  { title:"Cách xóa (đóng) tài khoản Binance", exchange:"Binance", cover:"cover_del",
+    desc:"Đóng tài khoản Binance cũ ngay trong app, chỉ 6 bước.",
+    warn:"⚠️ Trước khi đóng: rút hoặc chuyển hết tài sản và dùng hết voucher. Theo Binance, đóng tài khoản <b>không thể hoàn tác</b>, bạn sẽ không vào lại được tài khoản và không xem được lịch sử giao dịch. Nếu tạo tài khoản mới sau khi đóng, việc xác minh danh tính (KYC) sẽ bị chặn <b>30 ngày hoặc lâu hơn</b> và bạn không đủ điều kiện nhận hoàn tiền giới thiệu từ người giới thiệu khác.",
+    steps:[
+      {text:"Ở <b>Trang chủ</b> app Binance, bấm vào <b>ảnh đại diện</b> ở góc trên bên trái.", img:"del1"},
+      {text:"Bấm vào mũi tên <b>&gt;</b> ở bên phải tên tài khoản.", img:"del2"},
+      {text:"Chọn <b>Bảo mật</b>.", img:"del3"},
+      {text:"Kéo xuống dưới cùng, chọn <b>Quản lý tài khoản</b>.", img:"del4"},
+      {text:"Chọn <b>Đóng tài khoản</b>.", img:"del5"},
+      {text:"Chọn lý do <b>\"Không muốn sử dụng tài khoản này nữa\"</b>, bấm Tiếp tục và làm theo hướng dẫn trên màn hình.", img:"del6"}
+    ] },
+  { title:"Cách nhận và sử dụng voucher Binance", exchange:"Binance", cover:"cover_vou",
+    desc:"Tìm voucher trong Trạm phần thưởng và đổi ra USDT vào tài khoản Spot.",
+    warn:"",
+    steps:[
+      {text:"Ở <b>Trang chủ</b> app Binance, bấm vào <b>ảnh đại diện</b> ở góc trên bên trái.", img:"del1"},
+      {text:"Ở mục <b>Khuyến nghị</b>, kéo qua trái.", img:"vou2"},
+      {text:"Chọn <b>Trạm phần thưởng</b>.", img:"vou3"},
+      {text:"Bấm <b>Voucher của tôi</b> ở góc dưới bên phải.", img:"vou4"},
+      {text:"Bấm <b>Sử dụng</b> ở từng voucher, rồi bấm <b>Để sau</b>. Làm lần lượt cho đến khi dùng hết tất cả voucher. Tiền sẽ vào tài khoản <b>Spot</b>.", img:"vou5"}
+    ] },
 ];
 
 const STEPS = {
@@ -467,6 +531,33 @@ document.getElementById("su-kien").addEventListener("click", ev=>{
   document.getElementById("m-go").href = e.link;
   document.getElementById("modal").classList.add("open");
 });
+
+function renderGuides(){
+  const g = document.getElementById("gd-grid");
+  const IMG = (typeof GUIDE_IMG!=="undefined") ? GUIDE_IMG : {};
+  if(!GUIDES.length){ g.outerHTML = '<div class="ev-empty">Hướng dẫn mới sẽ sớm được cập nhật.</div>'; return; }
+  g.innerHTML = GUIDES.map((d,i)=>`<button class="gd" data-gd="${i}">
+      ${IMG[d.cover]?`<img src="${IMG[d.cover]}" alt="${d.title}">`:""}
+      <h3>${d.title}</h3>
+      <p>${d.desc||""}</p>
+      <span class="btn btn-primary">Xem hướng dẫn (${d.steps.length} bước) →</span>
+    </button>`).join("");
+  g.addEventListener("click", ev=>{
+    const b = ev.target.closest("[data-gd]");
+    if(!b) return;
+    const d = GUIDES[+b.dataset.gd];
+    document.getElementById("g-title").textContent = d.title;
+    document.getElementById("g-sub").textContent = (d.exchange||"") + " · " + d.steps.length + " bước";
+    document.getElementById("g-warn").innerHTML = d.warn||"";
+    document.getElementById("g-steps").innerHTML = d.steps.map((s,k)=>`<li><div class="cap"><b class="n">${k+1}</b><span>${s.text}</span></div>${IMG[s.img]?`<img loading="lazy" src="${IMG[s.img]}" alt="Bước ${k+1}">`:""}</li>`).join("");
+    document.getElementById("gmodal").classList.add("open");
+    document.querySelector("#gmodal .modal-box").scrollTop = 0;
+  });
+  const gm = document.getElementById("gmodal");
+  document.getElementById("g-close").onclick = ()=>gm.classList.remove("open");
+  gm.addEventListener("click", e=>{ if(e.target===gm) gm.classList.remove("open"); });
+}
+renderGuides();
 
 document.getElementById("count-all").textContent = EXCHANGES.length;
 document.getElementById("year").textContent = new Date().getFullYear();
